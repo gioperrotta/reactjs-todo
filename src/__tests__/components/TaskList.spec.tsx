@@ -47,7 +47,7 @@ describe('App Page', () => {
 
     expect(screen.queryByTestId('task')).not.toBeInTheDocument();
 
-    const taskInput = screen.getByPlaceholderText('Adicionar novo todo');
+   const taskInput = screen.getByPlaceholderText('Adicionar novo todo');
 
     fireEvent.change(taskInput, {
       target: {
