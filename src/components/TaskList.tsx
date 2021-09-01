@@ -15,40 +15,29 @@ export function TaskList() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
-    if (newTaskTitle.length > 10) {
-      const newTask: Task = {
-        id: Math.trunc((Math.random() * (100000 - 1) + 1)),
-        title: newTaskTitle,
-        isComplete: false
-      }
-      setTasks([...tasks, newTask]);
-      setNewTaskTitle('');
-    } else {
-      alert('Uma Task vazia deve possuir pelo menos 10 caracteres')
+    if (!newTaskTitle.length) return;
+    const newTask: Task = {
+      id: Math.trunc((Math.random() * (100000 - 1) + 1)),
+      title: newTaskTitle,
+      isComplete: false
     }
+    setTasks([...tasks, newTask]);
+    setNewTaskTitle('');
   }
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
-    let tempTasks = tasks;
-    tempTasks.forEach((task, i) => {
-      if (task.id === id) {
-        tempTasks[i].isComplete = !tempTasks[i].isComplete;
-      }
+    const copyTasks = tasks;
+    copyTasks.forEach((task, i) => {
+      task.id === id && (copyTasks[i].isComplete = !copyTasks[i].isComplete);
     })
-    setTasks([...tempTasks]);
+    setTasks([...copyTasks]);
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
-    let tempTasks = tasks;
-    tempTasks.forEach((task, i) => {
-      if (task.id === id) {
-        tempTasks.splice(i, 1);
-      }
-    })
-    setTasks([...tempTasks]);
+    const tempTasks = tasks.filter(task => task.id !== id);
+    setTasks(tempTasks);
   }
 
   return (
